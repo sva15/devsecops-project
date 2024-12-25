@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port on which the app will run
-EXPOSE 80
+EXPOSE 8080
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
