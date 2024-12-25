@@ -34,8 +34,8 @@ steps:
         '--platform',
         'managed',
         '--allow-unauthenticated',
-        '--set-env-vars',
-        'PORT=5000'  # Set the port your application listens on
+        '--set-env-vars'
+      
       ]
 
 # Output Docker image for traceability
