@@ -48,3 +48,6 @@ substitutions:
   _IMAGE_NAME: 'my-python-microservice'
   _CLOUD_RUN_SERVICE: 'my-python-microservice'
   _VERSION_TAG: 'v${BUILD_ID}-${SHORT_SHA}' # Versioning based on build ID and commit hash
+
+options:
+  logging: CLOUD_LOGGING_ONLY
