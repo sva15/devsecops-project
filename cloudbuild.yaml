@@ -34,7 +34,7 @@ steps:
         '--platform',
         'managed',
         '--allow-unauthenticated',
-        'health-check-timeout', 
+        '--health-check-timeout', 
         '180'
         
       ]
