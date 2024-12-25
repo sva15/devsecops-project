@@ -33,9 +33,7 @@ steps:
         '${_REGION}',
         '--platform',
         'managed',
-        '--allow-unauthenticated',
-        '--set-env-vars'
-      
+        '--allow-unauthenticated'
       ]
 
 # Output Docker image for traceability
