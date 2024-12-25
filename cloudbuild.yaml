@@ -33,7 +33,10 @@ steps:
         '${_REGION}',
         '--platform',
         'managed',
-        '--allow-unauthenticated'
+        '--allow-unauthenticated',
+        'health-check-timeout', 
+        '180'
+        
       ]
 
 # Output Docker image for traceability
