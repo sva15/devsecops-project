@@ -1,0 +1,50 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Build Docker Image
+    args:
+      [
+        'build',
+        '-t',
+        '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_VERSION_TAG}',
+        '.'
+      ]
+
+  # Step 2: Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push Docker Image
+    args:
+      [
+        'push',
+        '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_VERSION_TAG}'
+      ]
+
+  # Step 3: Deploy the image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Deploy to Cloud Run
+    args:
+      [
+        'run',
+        'deploy',
+        '${_CLOUD_RUN_SERVICE}',
+        '--image',
+        '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_VERSION_TAG}',
+        '--region',
+        '${_REGION}',
+        '--platform',
+        'managed',
+        '--allow-unauthenticated'
+      ]
+
+# Output Docker image for traceability
+images:
+  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_VERSION_TAG}'
+
+# Define substitutions for dynamic versioning
+substitutions:
+  _REGION: 'us-central1'
+  _PROJECT_ID: 'adept-elevator-445410-q2'
+  _REPOSITORY_NAME: 'gcp-docker-repo'
+  _IMAGE_NAME: 'my-python-microservice'
+  _CLOUD_RUN_SERVICE: 'my-python-microservice'
+  _VERSION_TAG: 'v${BUILD_ID}-${SHORT_SHA}' # Versioning based on build ID and commit hash
